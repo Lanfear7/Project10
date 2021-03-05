@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
+import Courses from './components/courses'
+import Context from './Context'
 
 class App extends Component {
   constructor(){
     super();
   }
 
-  componentDidMount() {
-    fetch('http://localhost:5000/api/courses')
-    .then(res => res.json())
-    .then(data => console.log(data))
-
-  }
-
   render(){
     return(
     <div>
       <h1>Working</h1>
+      <Courses />
     </div>
     
     )
