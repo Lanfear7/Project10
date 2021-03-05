@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class Courses extends Component {
     state = { 
@@ -13,15 +14,21 @@ export default class Courses extends Component {
             console.log(err)
         })
     }
+    
     render() {
+        const courses = this.state.data.map((course) => 
+        <React.Fragment key={course.id}>
+                <div><Link to={`/courses/${course.id}`}>
+                    <h3>{course.title}</h3>
+                </Link></div>
+        </React.Fragment>
+        )
         console.log(this.state.data)
         return (
             <div>
                 <h1>Courses</h1>
                 <ul>
-                    {
-                        this.state.data.map((course) => <li key={course.id}><a href={`http://localhost:3000/courseDetails/${course.id}`}>{course.title}</a></li>)
-                    }
+                    {courses}
                 </ul>
             </div>
         )

@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import Courses from './components/courses'
 import Context from './Context'
+import CourseDetails from './components/courseDetails'
+import {Route, Switch, BrowserRouter} from 'react-router-dom'
 
-class App extends Component {
-  constructor(){
-    super();
-  }
-
-  render(){
-    return(
+const App = () => (
+  <BrowserRouter>
     <div>
-      <h1>Working</h1>
-      <Courses />
+      <Switch>
+        <Route exact path="/" component={Courses} />
+        <Route path='/courses/:id' component={CourseDetails} />
+      </Switch>
     </div>
-    
-    )
-  }
-}
+  </BrowserRouter>
+)
 
 export default App;
