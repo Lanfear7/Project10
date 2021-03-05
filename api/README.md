@@ -5,8 +5,8 @@ Inorder for a user make changes to the database, they will be required to log in
 
 Install dependencies => npm install
 
-Usage => npm start
-Run npm run seed to seed the database with a few initial entries.
+Usage => npm start\
+Run 'npm run seed' to seed the database with a few initial entries.
 
 This app will run on => localhost:5000/
 
