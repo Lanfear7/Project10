@@ -1,6 +1,6 @@
 import { Component } from "react";
-
-import React from 'react'
+import React from 'react';
+import { Link } from "react-router-dom";
 
 export default class CourseDetails extends Component{
     //componentDidMount to load the current course 
@@ -22,13 +22,13 @@ export default class CourseDetails extends Component{
         const courseOwner = this.state.author
         console.log(courseData)
         console.log(courseOwner)
-        return( 
-            /* Need HEADER */
+        return(
             <div id="root">
+              <div>
                 <div class="actions--bar">
                   <div class="bounds">
-                    <div class="grid-100"><span><a class="button" href="update-course.html">Update Course</a><a class="button" href="#">Delete Course</a></span><a
-                        class="button button-secondary" href="index.html">Return to List</a>
+                    <div class="grid-100"><span><a class="button" href="update-course.html">Update Course</a><a class="button" href="#">Delete Course</a></span><Link
+                        class="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>
                 </div>
@@ -68,6 +68,7 @@ export default class CourseDetails extends Component{
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
             
         )
