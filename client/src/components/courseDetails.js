@@ -20,14 +20,14 @@ export default class CourseDetails extends Component{
     render(){
         const courseData = this.state.course
         const courseOwner = this.state.author
-        console.log(courseData)
+        console.log(courseData.id)
         console.log(courseOwner)
         return(
             <div id="root">
               <div>
                 <div class="actions--bar">
                   <div class="bounds">
-                    <div class="grid-100"><span><a class="button" href="update-course.html">Update Course</a><a class="button" href="#">Delete Course</a></span><Link
+                    <div class="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><a class="button" href="#">Delete Course</a></span><Link
                         class="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>

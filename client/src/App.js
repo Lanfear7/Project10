@@ -14,6 +14,8 @@ import Header from './components/Header'
 const HeaderWithContext = withContext(Header)
 const UserSignInWithContext = withContext(UserSignIn)
 const UserSignUpWithContext = withContext(UserSignUp)
+const UpdateCourseWithContext = withContext(UpdateCourse)
+const UserSignOutWithContext = withContext(UserSignOut)
 
 const App = () => (
   <BrowserRouter>
@@ -21,12 +23,12 @@ const App = () => (
       <HeaderWithContext />
       <Switch>
         <Route exact path="/courses" component={Courses} />
-        <Route path="/courses.create" component={CreateCourse} />
-        <Route path="/courses/:id/update" component={UpdateCourse} />
+        <Route path="/courses/create" component={CreateCourse} />
+        <Route path="/courses/:id/update" component={UpdateCourseWithContext} />
         <Route path="/courses/:id" component={CourseDetails} />
         <Route path='/signin' component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
-        <Route path="/signout" component={UserSignOut} />
+        <Route path="/signout" component={UserSignOutWithContext} />
       </Switch>
     </div>
   </BrowserRouter>
