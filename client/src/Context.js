@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Data from './Data'
+import Cookies from 'js-cookie'
 
 const Context = React.createContext();
 
@@ -9,7 +10,7 @@ export class Provider extends Component {
         this.data = new Data();
     }
     state ={
-      authenticatedUser: null
+      authenticatedUser: Cookies.get('authenticatedUser')||null
     }
     render() {
         const { authenticatedUser } = this.state
@@ -32,7 +33,7 @@ export class Provider extends Component {
     signIn = async (emailAddress, password) => {
         console.log(emailAddress, password)
         const user = await this.data.userLogin(emailAddress, password)
-        console.log(user)
+        console.log('user info',user)
         if(user.err){
           console.log(user.err)
         }else{
@@ -40,6 +41,7 @@ export class Provider extends Component {
           this.setState(() => {
             return{authenticatedUser: user}
           })
+          Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1});
         }
         return user
     }
@@ -48,7 +50,10 @@ export class Provider extends Component {
       const newUser = await this.data.createUser(user)
       if(newUser.status === 400){
         console.log(newUser.statusText)
+      }else {
+        Cookies.set('authenticatedUser', JSON.stringify(newUser), { expires: 1});
       }
+      return newUser
     }
 
     signOut = () => {
@@ -57,6 +62,7 @@ export class Provider extends Component {
           authenticatedUser: null
         }
       })
+      Cookies.remove('authenticatedUser')
     }
 }
 

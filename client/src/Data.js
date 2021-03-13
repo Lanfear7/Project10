@@ -40,7 +40,16 @@ export default class Data {
         }
 
     }
-    //create course 
+    async createCourse(user, course){
+        console.log(user)//create course
+        const {emailAddress , password } = user
+        console.log(emailAddress)
+        console.log(password)
+        const response = await this.api('/courses', 'POST', course, true, {emailAddress, password})
+        if(response.status){
+            return response.json()
+        }
+    } 
     //update course 
     //delete course
 

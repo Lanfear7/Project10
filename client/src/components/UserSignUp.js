@@ -58,13 +58,18 @@ export default class UserSignUp extends Component{
     submit = (event) => {
       event.preventDefault()
       const { firstName, lastName, emailAddress, password, confirmPassword} = this.state
-      console.log(firstName, password)
       const user = {
         firstName,
         lastName,
         emailAddress,
         password
       }
-      this.props.context.actions.signUp(user)
+      this.props.context.actions.signUp(user).then(user => {
+        if(user.status === 201){
+          this.props.history.push('/courses')
+        } else {
+          console.log(user.err)
+        }
+      })
     }
 }
