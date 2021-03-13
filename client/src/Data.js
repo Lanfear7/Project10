@@ -45,9 +45,10 @@ export default class Data {
         const {emailAddress , password } = user
         console.log(emailAddress)
         console.log(password)
+        console.log(course)
         const response = await this.api('/courses', 'POST', course, true, {emailAddress, password})
         if(response.status){
-            return response.json()
+            return response
         }
     } 
     //update course 

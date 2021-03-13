@@ -84,6 +84,7 @@ export default class CreateCourse extends Component{
       if (typeof authUser === 'string' || authUser instanceof String){ // check to see if authUser is a string if string convert to json ****this happens after reload****
         // it's a string
         const objAuthUser = JSON.parse(authUser)
+        console.log(objAuthUser)
         const newCourseData = {
           title: this.state.title,
           description: this.state.description,
@@ -94,7 +95,7 @@ export default class CreateCourse extends Component{
         //send course data  <------ via props also send the auth user
         console.log(newCourseData)
         this.props.context.data.createCourse(objAuthUser, newCourseData).then(course => {
-          console.log(course)
+          this.props.history.push('/courses')
         })
       }else{
         // it's something else
