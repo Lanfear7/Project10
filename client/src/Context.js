@@ -59,7 +59,12 @@ export class Provider extends Component {
       if(newUser.status === 400){
         console.log(newUser.statusText)
       }else {
-        Cookies.set('authenticatedUser', JSON.stringify(newUser), { expires: 1});
+        this.setState(() =>{
+          return{
+            authenticatedUser: user
+          }
+        })
+        Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1});
       }
       return newUser
     }
