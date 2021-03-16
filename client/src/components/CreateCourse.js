@@ -93,12 +93,11 @@ export default class CreateCourse extends Component{
           userId: objAuthUser.id
         }
         //send course data  <------ via props also send the auth user
-        console.log(newCourseData)
         this.props.context.data.createCourse(objAuthUser, newCourseData).then(course => {
           this.props.history.push('/courses')
         })
       }else{
-        // it's something else
+        // it's already obj
         const newCourseData = {
           title: this.state.title,
           description: this.state.description,
@@ -106,10 +105,15 @@ export default class CreateCourse extends Component{
           materialsNeeded: this.state.materialsNeeded,
           userId: authUser.id
         }
-        console.log('no Json',newCourseData)
+        this.props.context.data.createCourse(authUser, newCourseData).then(course => {
+          console.log(course)
+          if(course.status === 500){
+            this.props.history.push('/errors')
+          }else{
+            this.props.history.push('/courses')
+          }
+          
+        })
       }
-      //send course data <------ via props also send the auth user
-      
-      
-     }
+    }
 }

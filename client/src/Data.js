@@ -41,17 +41,35 @@ export default class Data {
 
     }
     async createCourse(user, course){
-        console.log(user)//create course
         const {emailAddress , password } = user
-        console.log(emailAddress)
-        console.log(password)
-        console.log(course)
         const response = await this.api('/courses', 'POST', course, true, {emailAddress, password})
         if(response.status){
             return response
         }
+    }
+    async courseInfo(courseId){
+        console.log(courseId)
+        const response = await this.api(`/courses/${courseId}`, 'GET', null, false, null)
+        if(response.status === 200){
+            return response.json().then(data => data)
+        }else{
+            return response.status
+        }
     } 
     //update course 
+    async updateCourse(courseId, courseInfo, user){
+        console.log(courseId, courseInfo, user)
+        const { emailAddress, password} = user
+        console.log(emailAddress, password)
+        const response = await this.api(`/courses/${courseId}`, 'PUT', courseInfo, true, { emailAddress, password })
+        if(response.status === 204){
+            console.log('updated')
+            return response.status
+        }else{
+            console.log('oops')
+            return response.status
+        }
+    }
     //delete course
 
 }
