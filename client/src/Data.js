@@ -71,5 +71,18 @@ export default class Data {
         }
     }
     //delete course
+    async removeCourse(courseId, authUser){
+        //take courseId(params passed to function) format that in the url
+        const {emailAddress, password} = authUser 
+        console.log(emailAddress, password)
+        const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, {emailAddress, password})
+        if(response.status == 403){
+            console.log(response)
+            return response.json()
+        }else {
+            return response
+        }
+    }
+    
 
 }

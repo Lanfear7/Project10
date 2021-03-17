@@ -26,7 +26,8 @@ export class Provider extends Component {
                 signUp: this.signUp,
                 signOut: this.signOut,
                 currentCourse: this.currentCourse,
-                updateCourse: this.updateCourse
+                updateCourse: this.updateCourse,
+                deleteCourse: this.deleteCourse
             }
         }
         return (
@@ -141,6 +142,14 @@ export class Provider extends Component {
 
       }else{
         console.log('must login to update Course')
+      }
+    }
+    deleteCourse = async (courseId) => {
+      console.log(courseId)
+      const authUser = this.state.authenticatedUser
+      if(typeof authUser === 'string' || authUser instanceof String){
+        const parsedAuth = JSON.parse(authUser)
+        return this.data.removeCourse(courseId, parsedAuth) //return this call to work with the .then() promise in the component 
       }
     }
 }

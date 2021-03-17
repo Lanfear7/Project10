@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default class CourseDetails extends Component{
     //componentDidMount to load the current course 
     state = {
+        errors : [],
         course: [],
         author : []
     }
@@ -20,17 +21,22 @@ export default class CourseDetails extends Component{
     render(){
         const courseData = this.state.course
         const courseOwner = this.state.author
-        console.log(courseData.id)
-        console.log(courseOwner)
+        const errors =this.state.errors
+        console.log(this.state.errors)
         return(
             <div id="root">
               <div>
                 <div class="actions--bar">
                   <div class="bounds">
-                    <div class="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><a class="button" href="#">Delete Course</a></span><Link
+                    <div class="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><button class="button" onClick={this.delete}>Delete Course</button></span><Link
                         class="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>
+                  {
+                    errors.err
+                    ?<h1>{errors.err}</h1>
+                    :<div></div>
+                  }
                 </div>
                 <div class="bounds course--detail">
                   <div class="grid-66">
@@ -73,4 +79,24 @@ export default class CourseDetails extends Component{
             
         )
     }
+    delete = (event) => {
+      const { context } = this.props
+      event.preventDefault()
+      const courseId = this.state.course.id
+      console.log(courseId)
+      context.actions.deleteCourse(courseId).then(res => {
+        console.log(res)
+        if(res.err){
+          console.log(res.err)
+          this.setState({
+            errors: res
+          })
+        }else{
+          this.props.history.push('/courses')
+        }
+        //take response if 200 redirect to /courses
+        //else display error on page message from API => ("Must be the owner of this course to delete.")
+      })
+    }
+
 }
