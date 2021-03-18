@@ -53,21 +53,21 @@ module.exports = (sequelize) => {
         password: {
             type: Sequelize.STRING,
             allowNull: false,
-            set(val) {
-                const hashedPass = bcrypt.hashSync(val, 10)
-                this.setDataValue('password', hashedPass)
+            validate: {
+              notNull: {
+                msg: "Please provide a password",
+              },
+              notEmpty: {
+                msg: "Please provide a password",
+              },
             },
-            validate:{
-                notNull: {
-                    msg: "Must provide a password."
-                },
-                notEmpty: {
-                    msg: 'Must provide a email address.'
-                }
-            }
-        }
-    },{ sequelize });
+          },
 
+    },{ sequelize });
+    //this hook will run before the data is created to encrypt the password
+    User.addHook("beforeCreate", user => {
+        user.password = bcrypt.hashSync(user.password, 10)
+    });
     //DB association to the course module  
     User.associate = (models) => {
         User.hasMany(models.Course, {

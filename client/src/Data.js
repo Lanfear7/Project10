@@ -64,10 +64,10 @@ export default class Data {
         const response = await this.api(`/courses/${courseId}`, 'PUT', courseInfo, true, { emailAddress, password })
         if(response.status === 204){
             console.log('updated')
-            return response.status
+            return response
         }else{
             console.log('oops')
-            return response.status
+            return response
         }
     }
     //delete course

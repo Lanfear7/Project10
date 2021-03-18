@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React ,{ Component } from "react";
 
 export default class CreateCourse extends Component{
   state ={
@@ -6,6 +6,7 @@ export default class CreateCourse extends Component{
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
+    errors: []
   }
     render(){
 
@@ -13,9 +14,15 @@ export default class CreateCourse extends Component{
         title,
         description,
         estimatedTime,
-        materialsNeeded
+        materialsNeeded,
+        errors
       } = this.state
-
+      console.log(this.state.errors)
+      const errorDisplay = this.state.errors.map((error) => 
+        <React.Fragment>
+          <li>{error}</li>
+        </React.Fragment>
+      )
         return(
             <div id="root">
               <div>
@@ -23,15 +30,18 @@ export default class CreateCourse extends Component{
                 <div className="bounds course--detail">
                   <h1>Create Course</h1>
                   <div>
-                    <div>
-                      <h2 className="validation--errors--label">Validation errors</h2>
-                      <div className="validation-errors">
-                        <ul>
-                          <li>Please provide a value for "Title"</li>
-                          <li>Please provide a value for "Description"</li>
-                        </ul>
-                      </div>
-                    </div>
+                  {
+                      errors.length
+                      ? <div>
+                          <h2 class="validation--errors--label">Validation errors</h2>
+                          <div class="validation-errors">
+                            <ul>
+                             {errorDisplay}
+                            </ul>
+                          </div>
+                        </div>
+                      :<div></div>
+                    }
                     <form onSubmit={this.submit}>
                       <div className="grid-66">
                         <div className="course--header">
@@ -77,43 +87,32 @@ export default class CreateCourse extends Component{
 
      submit = (event) =>{
       event.preventDefault()
-      console.log(this.state.title)
       //get the authenticated user
       const authUser = this.props.context.authenticatedUser
-      console.log('authUser', authUser)
-      if (typeof authUser === 'string' || authUser instanceof String){ // check to see if authUser is a string if string convert to json ****this happens after reload****
-        // it's a string
-        const objAuthUser = JSON.parse(authUser)
-        console.log(objAuthUser)
-        const newCourseData = {
-          title: this.state.title,
-          description: this.state.description,
-          estimatedTime: this.state.estimatedTime,
-          materialsNeeded: this.state.materialsNeeded,
-          userId: objAuthUser.id
-        }
-        //send course data  <------ via props also send the auth user
-        this.props.context.data.createCourse(objAuthUser, newCourseData).then(course => {
-          this.props.history.push('/courses')
-        })
-      }else{
-        // it's already obj
-        const newCourseData = {
-          title: this.state.title,
-          description: this.state.description,
-          estimatedTime: this.state.estimatedTime,
-          materialsNeeded: this.state.materialsNeeded,
-          userId: authUser.id
-        }
-        this.props.context.data.createCourse(authUser, newCourseData).then(course => {
-          console.log(course)
-          if(course.status === 500){
-            this.props.history.push('/errors')
-          }else{
-            this.props.history.push('/courses')
-          }
-          
-        })
+      const { context } = this.props
+      const formattedAuth = context.actions.formatting(authUser)
+      const newCourseData = {
+        title: this.state.title,
+        description: this.state.description,
+        estimatedTime: this.state.estimatedTime,
+        materialsNeeded: this.state.materialsNeeded,
+        userId: formattedAuth.id
       }
+      this.props.context.data.createCourse(formattedAuth, newCourseData).then(course => {
+        if(course.status == 500){
+          this.props.history.push('/errors')
+        }else if(course.status == 400){
+          course.json().then(error =>{
+            this.setState(() => {
+              return{
+                errors: error.errors
+              }
+            })
+          } )
+        }else{
+          this.props.history.push('/courses')
+        }
+        
+      })
     }
 }

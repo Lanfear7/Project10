@@ -1,6 +1,7 @@
 import { Component } from "react";
 import React from 'react';
 import { Link } from "react-router-dom";
+import ReactMarkdown from 'react-markdown'
 
 export default class CourseDetails extends Component{
     //componentDidMount to load the current course 
@@ -11,27 +12,43 @@ export default class CourseDetails extends Component{
     }
     componentDidMount(){
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
-        .then(res => res.json())
-        .then(course => this.setState({
+        .then(res => {
+          console.log(res)
+          if(res.status == 400){
+            this.props.history.push('/notfound')
+          }else{
+            res.json()
+            .then(course => this.setState({
             course,
             author: course.User
-        }))
+            }))
+          }
+        })
+        
         document.title = 'Courses'
     }
     render(){
         const courseData = this.state.course
         const courseOwner = this.state.author
         const errors =this.state.errors
-        console.log(this.state.errors)
+        const { context } = this.props
+        const formattedAuth = context.actions.formatting(context.authenticatedUser)
+        const materialsNeededMarkdown = `* ${courseData.materialsNeeded}`
         return(
             <div id="root">
               <div>
                 <div class="actions--bar">
+                {formattedAuth && formattedAuth.emailAddress === courseOwner.emailAddress
+  
+                  ?
                   <div class="bounds">
                     <div class="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><button class="button" onClick={this.delete}>Delete Course</button></span><Link
                         class="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>
+                  :<div></div>
+                }
+                  
                   {
                     errors.err
                     ?<h1>{errors.err}</h1>
@@ -55,19 +72,15 @@ export default class CourseDetails extends Component{
                         <li class="course--stats--list--item">
                           <h4>Estimated Time</h4>
                           {
-                              courseData.estimatedTime
-                              ? <h3>{courseData.estimatedTime}</h3> 
-                              : <h3>Null</h3>
+                            courseData.estimatedTime
+                            ? <h3>{courseData.estimatedTime}</h3> 
+                            : <h3>Null</h3>
                           }
                         </li>
                         <li class="course--stats--list--item">
                           <h4>Materials Needed</h4>
-                          <ul>{
-                            courseData.materialsNeeded
-                            ?courseData.materialsNeeded.split('*').slice(1).map((mat, key) => <li key={key}>*{mat}</li>)
-                            :<li>null</li>
-                            
-                          }
+                          <ul>
+                            <ReactMarkdown source={courseData.materialsNeeded}/>
                           </ul>
                         </li>
                       </ul>
@@ -85,14 +98,10 @@ export default class CourseDetails extends Component{
       const courseId = this.state.course.id
       console.log(courseId)
       context.actions.deleteCourse(courseId).then(res => {
-        console.log(res)
-        if(res.err){
-          console.log(res.err)
-          this.setState({
-            errors: res
-          })
-        }else{
+        if(res.status == 204){
           this.props.history.push('/courses')
+        }else{
+          this.props.history.push('/error')
         }
         //take response if 200 redirect to /courses
         //else display error on page message from API => ("Must be the owner of this course to delete.")

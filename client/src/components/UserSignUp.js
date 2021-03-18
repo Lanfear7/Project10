@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 export default class UserSignUp extends Component{
@@ -7,7 +7,8 @@ export default class UserSignUp extends Component{
     lastName: '',
     emailAddress: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    errors: []
   }
     render(){
 
@@ -16,8 +17,15 @@ export default class UserSignUp extends Component{
         lastName,
         emailAddress,
         password,
-        confirmPassword
+        errors
       } = this.state
+      errors.map((error) => {console.log(error)})
+
+      const errorDisplay = this.state.errors.map((error) => 
+        <React.Fragment>
+          <li>{error}</li>
+        </React.Fragment>
+      )
 
         return(
             <div id="root">
@@ -26,6 +34,18 @@ export default class UserSignUp extends Component{
                 <div className="bounds">
                   <div className="grid-33 centered signin">
                     <h1>Sign Up</h1>
+                    {
+                      errors.length
+                      ? <div>
+                          <h2 class="validation--errors--label">Validation errors</h2>
+                          <div class="validation-errors">
+                            <ul>
+                             {errorDisplay}
+                            </ul>
+                          </div>
+                        </div>
+                      :<div></div>
+                    }
                     <div>
                       <form onSubmit={this.submit}>
                         <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={firstName} onChange={this.change}/></div>
@@ -68,7 +88,11 @@ export default class UserSignUp extends Component{
         if(user.status === 201){
           this.props.history.push('/courses')
         } else {
-          console.log(user.err)
+          this.setState(()=>{
+            return{
+              errors: user.errors
+            }
+          })
         }
       })
     }

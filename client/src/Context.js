@@ -27,7 +27,8 @@ export class Provider extends Component {
                 signOut: this.signOut,
                 currentCourse: this.currentCourse,
                 updateCourse: this.updateCourse,
-                deleteCourse: this.deleteCourse
+                deleteCourse: this.deleteCourse,
+                formatting: this.formatting
             }
         }
         return (
@@ -53,7 +54,7 @@ export class Provider extends Component {
           })
           //add password (state)
           user.password = this.state.currentPassword
-          console.log(user)
+          console.log(this.authenticatedUser)
           Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1});
         }
         return user
@@ -62,7 +63,7 @@ export class Provider extends Component {
     signUp = async (user) => {
       const newUser = await this.data.createUser(user)
       if(newUser.status === 400){
-        console.log(newUser.statusText)
+        return newUser.json().then(data => data)
       }else {
         this.setState(() =>{
           return{
@@ -98,59 +99,40 @@ export class Provider extends Component {
       return currentCourseInfo
     }
 
+    formatting(user){
+      if(typeof user === 'string' || user instanceof String){
+        const parsed = JSON.parse(user)
+        return parsed
+      }else{
+        return user
+      }
+    }
+
     updateCourse = async (courseData) => {
       const newData = courseData
       const authUser = this.state.authenticatedUser
-
-      if(authUser != null){
-
-        if(typeof authUser === 'string' || authUser instanceof String){
-          //authUser was passed down as a string
-          const objAuthUser = JSON.parse(authUser)
-
-          if(objAuthUser.emailAddress === this.state.currentCourseOwner.emailAddress){
-            //make "body" obj to send to update
-            const updatedData = {
-              id: this.state.currentCourseInfo.id,
-              title: newData[0],
-              description: newData[1],
-              estimatedTime: newData[2],
-              materialsNeeded: newData[3]
-            }
-            const response = await this.data.updateCourse(this.state.currentCourseInfo.id, updatedData, objAuthUser)
-            return response
-          } else {
-            console.log('must be owner of the course')
-          }
-
-        } else {//authUser was already passed as a obj
-
-          if(authUser.emailAddress === this.state.currentCourseOwner.emailAddress){
-            //make "body" obj to send to update
-            const updatedData = {
-              id: this.state.currentCourseInfo.id,
-              title: newData[0],
-              description: newData[1],
-              estimatedTime: newData[2],
-              materialsNeeded: newData[3]
-            } 
-            this.data.updateCourse(this.state.currentCourseInfo.id, updatedData, authUser)
-          } else {
-            console.log('must be owner of the course')
-          }
+      const formattedAuth = this.formatting(authUser)
+      console.log(formattedAuth)
+      if(formattedAuth.emailAddress == this.state.currentCourseOwner.emailAddress){
+         const updatedData = {
+          id: this.state.currentCourseInfo.id,
+          title: newData[0],
+          description: newData[1],
+          estimatedTime: newData[2],
+          materialsNeeded: newData[3]
         }
-
-      }else{
-        console.log('must login to update Course')
+        const response = await this.data.updateCourse(this.state.currentCourseInfo.id, updatedData, formattedAuth)
+        console.log(response)
+        return response
+        
       }
     }
+
     deleteCourse = async (courseId) => {
       console.log(courseId)
       const authUser = this.state.authenticatedUser
-      if(typeof authUser === 'string' || authUser instanceof String){
-        const parsedAuth = JSON.parse(authUser)
-        return this.data.removeCourse(courseId, parsedAuth) //return this call to work with the .then() promise in the component 
-      }
+      const formattedAuth = this.formatting(authUser)
+      return this.data.removeCourse(courseId, formattedAuth) //return this call to work with the .then() promise in the component 
     }
 }
 

@@ -52,6 +52,7 @@ router.get('/users', authenticateUser(), asyncHandler(async(req, res, next) => {
 router.post('/users', asyncHandler(async(req, res) => {
     let err;
     try{
+        console.log(req.body)
         await User.create(req.body);
         res.location("/").status(201).end();
     }catch(error){
