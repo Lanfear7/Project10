@@ -17,11 +17,15 @@ export default class CreateCourse extends Component{
         materialsNeeded,
         errors
       } = this.state
+      const { context } = this.props
+
       const errorDisplay = this.state.errors.map((error) => 
         <React.Fragment>
           <li>{error}</li>
         </React.Fragment>
       )
+
+      console.log(context.authenticatedUser)
         return(
             <div id="root">
               <div>

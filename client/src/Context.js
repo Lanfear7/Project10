@@ -60,13 +60,16 @@ export class Provider extends Component {
       const newUser = await this.data.createUser(user)
       if(newUser.status === 400){
         return newUser.json().then(data => data)
-      }else {
-        this.setState(() =>{
-          return{
-            authenticatedUser: user
-          }
+      }else if (newUser.status === 201) {
+        //send to sign in function
+        this.signIn(user.emailAddress, user.password)
+        .then(data =>{ 
+          this.setState(() => {
+            return{
+              authenticatedUser: data
+            }
+          })
         })
-        Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1});
       }
       return newUser
     }

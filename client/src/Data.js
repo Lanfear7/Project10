@@ -24,6 +24,7 @@ export default class Data {
         const response = await this.api('/users', 'POST', user, false, null);
         if(response.status === 201){
             console.log('created User')
+            return response
         }else if (response.status === 400){
             console.log(response)
         }else{
