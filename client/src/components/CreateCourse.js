@@ -17,7 +17,6 @@ export default class CreateCourse extends Component{
         materialsNeeded,
         errors
       } = this.state
-      console.log(this.state.errors)
       const errorDisplay = this.state.errors.map((error) => 
         <React.Fragment>
           <li>{error}</li>

@@ -39,13 +39,10 @@ export class Provider extends Component {
     }
 
     signIn = async (emailAddress, password) => {
-        console.log(emailAddress, password)
         const user = await this.data.userLogin(emailAddress, password)
-        console.log('user info',user)
         if(user.err){
           console.log(user.err)
         }else{
-          console.log('signed in')
           this.setState(() => {
             return{
               authenticatedUser: user,
@@ -54,7 +51,6 @@ export class Provider extends Component {
           })
           //add password (state)
           user.password = this.state.currentPassword
-          console.log(this.authenticatedUser)
           Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1});
         }
         return user
@@ -112,7 +108,6 @@ export class Provider extends Component {
       const newData = courseData
       const authUser = this.state.authenticatedUser
       const formattedAuth = this.formatting(authUser)
-      console.log(formattedAuth)
       if(formattedAuth.emailAddress == this.state.currentCourseOwner.emailAddress){
          const updatedData = {
           id: this.state.currentCourseInfo.id,
@@ -122,14 +117,12 @@ export class Provider extends Component {
           materialsNeeded: newData[3]
         }
         const response = await this.data.updateCourse(this.state.currentCourseInfo.id, updatedData, formattedAuth)
-        console.log(response)
         return response
         
       }
     }
 
     deleteCourse = async (courseId) => {
-      console.log(courseId)
       const authUser = this.state.authenticatedUser
       const formattedAuth = this.formatting(authUser)
       return this.data.removeCourse(courseId, formattedAuth) //return this call to work with the .then() promise in the component 

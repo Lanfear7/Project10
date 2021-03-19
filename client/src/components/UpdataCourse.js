@@ -106,7 +106,6 @@ export default class UpdateCourse extends Component{
           [name] : value
         }
       })
-      console.log(this.state.title)
     }
     submit = (event) => {
       event.preventDefault()

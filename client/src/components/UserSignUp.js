@@ -17,11 +17,11 @@ export default class UserSignUp extends Component{
         lastName,
         emailAddress,
         password,
+        confirmPassword,
         errors
       } = this.state
-      errors.map((error) => {console.log(error)})
 
-      const errorDisplay = this.state.errors.map((error) => 
+      const errorDisplay = errors.map((error) => 
         <React.Fragment>
           <li>{error}</li>
         </React.Fragment>
@@ -52,7 +52,7 @@ export default class UserSignUp extends Component{
                         <div><input id="lastName" name="lastName" type="text" className placeholder="Last Name" value={lastName} onChange={this.change} /></div>
                         <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={emailAddress} onChange={this.change}  /></div>
                         <div><input id="password" name="password" type="password" className placeholder="Password"  value={password} onChange={this.change}/></div>
-                        <div><input id="confirmPassword" name="confirmPassword" type="password" className placeholder="Confirm Password"  /></div>
+                        <div><input id="confirmPassword" name="confirmPassword" type="password" className value={confirmPassword} onChange={this.change} placeholder="Confirm Password"  /></div>
                         <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></div>
                       </form>
                     </div>
@@ -82,9 +82,11 @@ export default class UserSignUp extends Component{
         firstName,
         lastName,
         emailAddress,
-        password
+        password,
+        confirmPassword
       }
-      this.props.context.actions.signUp(user).then(user => {
+      if(user.password == user.confirmPassword){
+        this.props.context.actions.signUp(user).then(user => {
         if(user.status === 201){
           this.props.history.push('/courses')
         } else {
@@ -94,6 +96,14 @@ export default class UserSignUp extends Component{
             }
           })
         }
-      })
+       })
+      }else{
+        this.setState(()=>{
+          return{
+            errors: ['Password did not match']
+          }
+        })
+      }
+      
     }
 }

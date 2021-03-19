@@ -54,7 +54,6 @@ export default class UserSignIn extends Component{
           this.setState({
             errors: user.err
           });
-          console.log(this.state.errors)
         }else{
           this.props.history.push(from)
         }

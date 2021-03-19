@@ -13,7 +13,6 @@ export default class CourseDetails extends Component{
     componentDidMount(){
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
         .then(res => {
-          console.log(res)
           if(res.status == 400){
             this.props.history.push('/notfound')
           }else{
@@ -96,7 +95,6 @@ export default class CourseDetails extends Component{
       const { context } = this.props
       event.preventDefault()
       const courseId = this.state.course.id
-      console.log(courseId)
       context.actions.deleteCourse(courseId).then(res => {
         if(res.status == 204){
           this.props.history.push('/courses')
