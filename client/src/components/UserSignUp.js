@@ -53,7 +53,7 @@ export default class UserSignUp extends Component{
                         <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={emailAddress} onChange={this.change}  /></div>
                         <div><input id="password" name="password" type="password" className placeholder="Password"  value={password} onChange={this.change}/></div>
                         <div><input id="confirmPassword" name="confirmPassword" type="password" className value={confirmPassword} onChange={this.change} placeholder="Confirm Password"  /></div>
-                        <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></div>
+                        <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><Link className="button button-secondary" to="/courses">Cancel</Link></div>
                       </form>
                     </div>
                     <p>&nbsp;</p>

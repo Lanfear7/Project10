@@ -45,7 +45,9 @@ export default class CourseDetails extends Component{
                         class="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>
-                  :<div></div>
+                  :<div>
+                    <Link class="button button-secondary" to="/courses">Return to List</Link>
+                  </div>
                 }
                   
                   {
@@ -62,7 +64,7 @@ export default class CourseDetails extends Component{
                       <p>{courseOwner.firstName} {courseOwner.lastName}</p>
                     </div>
                     <div class="course--description">
-                        {courseData.description}
+                      <ReactMarkdown source={courseData.description}/>
                     </div>
                   </div>
                   <div class="grid-25 grid-right">
