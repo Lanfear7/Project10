@@ -1,4 +1,5 @@
 import React ,{ Component } from "react";
+import { Link } from 'react-router-dom'
 
 export default class UpdateCourse extends Component{
   componentDidMount(){
@@ -36,13 +37,13 @@ export default class UpdateCourse extends Component{
     errors: []
   }
     render(){
+      console.log(this.state.title)
       const courseData = this.state.course
       const courseAuthor = this.state.author
       const error = this.state.errors
 
       const errorDisplay = <React.Fragment><li>{error}</li></React.Fragment>
   
-
       
         return(
             <div id="root">
@@ -58,20 +59,20 @@ export default class UpdateCourse extends Component{
                           {
                             error.length
                             ? <div>
-                                <h2 class="validation--errors--label">Validation errors</h2>
-                                <div class="validation-errors">
+                                <h2 className="validation--errors--label">Validation errors</h2>
+                                <div className="validation-errors">
                                   <ul>
                                    {errorDisplay}
                                   </ul>
                                 </div>
                               </div>
-                            :<div>no err</div>
+                            :<div></div>
                           }
-                          <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue={courseData.title} onKeyDown={this.change}/></div>
+                          <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue={courseData.title} onInput={this.change}/></div>
                           <p>{courseAuthor.firstName} {courseAuthor.lastName}</p>
                         </div>
                         <div className="course--description">
-                          <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={courseData.description} onChange={this.change}/></div>
+                          <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={courseData.description} onInput={this.change}/></div>
                         </div>
                       </div>
                       <div className="grid-25 grid-right">
@@ -79,16 +80,16 @@ export default class UpdateCourse extends Component{
                           <ul className="course--stats--list">
                             <li className="course--stats--list--item">
                               <h4>Estimated Time</h4>
-                              <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={courseData.estimatedTime} onChange={this.change}/></div>
+                              <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={courseData.estimatedTime} onInput={this.change}/></div>
                             </li>
                             <li className="course--stats--list--item">
                               <h4>Materials Needed</h4>
-                              <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={courseData.materialsNeeded} onChange={this.change}/></div>
+                              <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={courseData.materialsNeeded} onInput={this.change}/></div>
                             </li>
                           </ul>
                         </div>
                       </div>
-                      <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
+                      <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><Link to={{pathname: `/courses/${courseData.id}`}} className="button button-secondary">Cancel</Link></div>
                     </form>
                   </div>
                 </div>
@@ -100,7 +101,6 @@ export default class UpdateCourse extends Component{
     change = (event) => {
       const name = event.target.name
       const value = event.target.value
-      
       this.setState(()=>{
         return{
           [name] : value

@@ -38,6 +38,7 @@ const App = () => (
         <Route path="/signout" component={UserSignOutWithContext} />
         <Route path='/forbidden' component={forbidden} />
         <Route path='/error' component={UnhandledError} />
+        <Route path='/notfound' component={notFound} />
         <Route component={notFound} />
       </Switch>
     </div>

@@ -36,17 +36,17 @@ export default class CourseDetails extends Component{
         return(
             <div id="root">
               <div>
-                <div class="actions--bar">
+                <div className="actions--bar">
                 {formattedAuth && formattedAuth.emailAddress === courseOwner.emailAddress
   
                   ?
-                  <div class="bounds">
-                    <div class="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><button class="button" onClick={this.delete}>Delete Course</button></span><Link
-                        class="button button-secondary" to="/courses">Return to List</Link>
+                  <div className="bounds">
+                    <div className="grid-100"><span><Link className="button" to={{pathname: `${courseData.id}/update`}}>Update Course</Link><button class="button" onClick={this.delete}>Delete Course</button></span><Link
+                        className="button button-secondary" to="/courses">Return to List</Link>
                     </div>
                   </div>
                   :<div>
-                    <Link class="button button-secondary" to="/courses">Return to List</Link>
+                    <Link className="button button-secondary" to="/courses">Return to List</Link>
                   </div>
                 }
                   
@@ -56,21 +56,21 @@ export default class CourseDetails extends Component{
                     :<div></div>
                   }
                 </div>
-                <div class="bounds course--detail">
-                  <div class="grid-66">
-                    <div class="course--header">
-                      <h4 class="course--label">Course</h4>
-                      <h3 class="course--title">{courseData.title}</h3>
+                <div className="bounds course--detail">
+                  <div className="grid-66">
+                    <div className="course--header">
+                      <h4 className="course--label">Course</h4>
+                      <h3 className="course--title">{courseData.title}</h3>
                       <p>{courseOwner.firstName} {courseOwner.lastName}</p>
                     </div>
-                    <div class="course--description">
+                    <div className="course--description">
                       <ReactMarkdown source={courseData.description}/>
                     </div>
                   </div>
-                  <div class="grid-25 grid-right">
-                    <div class="course--stats">
-                      <ul class="course--stats--list">
-                        <li class="course--stats--list--item">
+                  <div className="grid-25 grid-right">
+                    <div className="course--stats">
+                      <ul className="course--stats--list">
+                        <li className="course--stats--list--item">
                           <h4>Estimated Time</h4>
                           {
                             courseData.estimatedTime
@@ -78,7 +78,7 @@ export default class CourseDetails extends Component{
                             : <h3>Null</h3>
                           }
                         </li>
-                        <li class="course--stats--list--item">
+                        <li className="course--stats--list--item">
                           <h4>Materials Needed</h4>
                           <ul>
                             <ReactMarkdown source={courseData.materialsNeeded}/>

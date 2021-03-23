@@ -37,8 +37,8 @@ export default class UserSignUp extends Component{
                     {
                       errors.length
                       ? <div>
-                          <h2 class="validation--errors--label">Validation errors</h2>
-                          <div class="validation-errors">
+                          <h2 className="validation--errors--label">Validation errors</h2>
+                          <div className="validation-errors">
                             <ul>
                              {errorDisplay}
                             </ul>

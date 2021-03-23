@@ -1,4 +1,5 @@
 import React ,{ Component } from "react";
+import { Link } from 'react-router-dom'
 
 export default class CreateCourse extends Component{
   state ={
@@ -70,7 +71,7 @@ export default class CreateCourse extends Component{
                           </ul>
                         </div>
                       </div>
-                      <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></div>
+                      <div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><Link className="button button-secondary" to='/courses'>Cancel</Link></div>
                     </form>
                   </div>
                 </div>
@@ -103,7 +104,7 @@ export default class CreateCourse extends Component{
       }
       this.props.context.data.createCourse(formattedAuth, newCourseData).then(course => {
         if(course.status == 500){
-          this.props.history.push('/errors')
+          this.props.history.push('/error')
         }else if(course.status == 400){
           course.json().then(error =>{
             this.setState(() => {
