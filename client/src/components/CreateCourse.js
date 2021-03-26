@@ -103,9 +103,9 @@ export default class CreateCourse extends Component{
         userId: formattedAuth.id
       }
       this.props.context.data.createCourse(formattedAuth, newCourseData).then(course => {
-        if(course.status == 500){
+        if(course.status === 500){
           this.props.history.push('/error')
-        }else if(course.status == 400){
+        }else if(course.status === 400){
           course.json().then(error =>{
             this.setState(() => {
               return{

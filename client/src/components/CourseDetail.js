@@ -13,7 +13,7 @@ export default class CourseDetails extends Component{
     componentDidMount(){
         fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
         .then(res => {
-          if(res.status == 400){
+          if(res.status === 400){
             this.props.history.push('/notfound')
           }else{
             res.json()
@@ -32,7 +32,6 @@ export default class CourseDetails extends Component{
         const errors =this.state.errors
         const { context } = this.props
         const formattedAuth = context.actions.formatting(context.authenticatedUser)
-        const materialsNeededMarkdown = `* ${courseData.materialsNeeded}`
         return(
             <div id="root">
               <div>
@@ -98,7 +97,7 @@ export default class CourseDetails extends Component{
       event.preventDefault()
       const courseId = this.state.course.id
       context.actions.deleteCourse(courseId).then(res => {
-        if(res.status == 204){
+        if(res.status === 204){
           this.props.history.push('/courses')
         }else{
           this.props.history.push('/error')

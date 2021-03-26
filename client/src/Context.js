@@ -111,7 +111,7 @@ export class Provider extends Component {
       const newData = courseData
       const authUser = this.state.authenticatedUser
       const formattedAuth = this.formatting(authUser)
-      if(formattedAuth.emailAddress == this.state.currentCourseOwner.emailAddress){
+      if(formattedAuth.emailAddress === this.state.currentCourseOwner.emailAddress){
          const updatedData = {
           id: this.state.currentCourseInfo.id,
           title: newData[0],

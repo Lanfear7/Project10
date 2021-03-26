@@ -85,7 +85,7 @@ export default class UserSignUp extends Component{
         password,
         confirmPassword
       }
-      if(user.password == user.confirmPassword){
+      if(user.password === user.confirmPassword){
         this.props.context.actions.signUp(user).then(user => {
         if(user.status === 201){
           this.props.history.push('/courses')

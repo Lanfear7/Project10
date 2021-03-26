@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class UserSignIn extends Component{ 
@@ -16,12 +16,29 @@ export default class UserSignIn extends Component{
         password,
         errors
       } = this.state
-
+      
+      const errorDisplay =
+        <React.Fragment>
+          <li>{errors}</li>
+        </React.Fragment>
+      
         return(
             <div className="root">
                 <div className="bounds">
                     <div className="grid-33 centered signin">
                     <h1>Sign In</h1>
+                    {
+                      errors.length
+                      ? <div>
+                          <h2 className="validation--errors--label">Validation errors</h2>
+                          <div className="validation-errors">
+                            <ul>
+                             {errorDisplay}
+                            </ul>
+                          </div>
+                        </div>
+                      :<div></div>
+                    }
                     <div>
                       <form onSubmit={this.submit}>
                         <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={emailAddress} onChange={this.change}/></div>

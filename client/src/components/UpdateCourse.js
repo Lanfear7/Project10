@@ -10,7 +10,7 @@ export default class UpdateCourse extends Component{
     context.actions.currentCourse(currentCourse).then(data =>{
       if(data === 400){
         this.props.history.push('/notfound')
-      }else if(formattedAuth.emailAddress != data.User.emailAddress){
+      }else if(formattedAuth.emailAddress !== data.User.emailAddress){
         this.props.history.push('/forbidden')
       }else{
         this.setState(()=>{
@@ -37,7 +37,6 @@ export default class UpdateCourse extends Component{
     errors: []
   }
     render(){
-      console.log(this.state.title)
       const courseData = this.state.course
       const courseAuthor = this.state.author
       const error = this.state.errors
@@ -116,9 +115,9 @@ export default class UpdateCourse extends Component{
         this.state.materialsNeeded
       ]
       this.props.context.actions.updateCourse(updatedCourseData).then(data =>{
-        if(data.status == 204){
+        if(data.status === 204){
           this.props.history.push('/courses')
-        } else if (data.status == 400){
+        } else if (data.status === 400){
           data.json().then(error => { 
             this.setState(() => {
               return{
