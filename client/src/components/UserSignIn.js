@@ -41,8 +41,8 @@ export default class UserSignIn extends Component{
                     }
                     <div>
                       <form onSubmit={this.submit}>
-                        <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={emailAddress} onChange={this.change}/></div>
-                        <div><input id="password" name="password" type="password" className placeholder="Password" value={password} onChange={this.change}/></div>
+                        <div><input id="emailAddress" name="emailAddress" type="text" placeholder="Email Address" value={emailAddress} onChange={this.change}/></div>
+                        <div><input id="password" name="password" type="password" placeholder="Password" value={password} onChange={this.change}/></div>
                         <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign In</button><Link className="button" to="/courses">Cancel</Link></div>
                       </form>
                     </div>

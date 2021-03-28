@@ -18,7 +18,6 @@ export default class CreateCourse extends Component{
         materialsNeeded,
         errors
       } = this.state
-      const { context } = this.props
 
       const errorDisplay = this.state.errors.map((error) => 
         <React.Fragment>
@@ -26,7 +25,6 @@ export default class CreateCourse extends Component{
         </React.Fragment>
       )
 
-      console.log(context.authenticatedUser)
         return(
             <div id="root">
               <div>
@@ -54,7 +52,7 @@ export default class CreateCourse extends Component{
                           <p>By Joe Smith</p>
                         </div>
                         <div className="course--description">
-                          <div><textarea id="description" name="description" className placeholder="Course description..." onChange={this.change} value={description}/></div>
+                          <div><textarea id="description" name="description" placeholder="Course description..." onChange={this.change} value={description}/></div>
                         </div>
                       </div>
                       <div className="grid-25 grid-right">
@@ -66,7 +64,7 @@ export default class CreateCourse extends Component{
                             </li>
                             <li className="course--stats--list--item">
                               <h4>Materials Needed</h4>
-                              <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." onChange={this.change} value={materialsNeeded}/></div>
+                              <div><textarea id="materialsNeeded" name="materialsNeeded" placeholder="List materials..." onChange={this.change} value={materialsNeeded}/></div>
                             </li>
                           </ul>
                         </div>

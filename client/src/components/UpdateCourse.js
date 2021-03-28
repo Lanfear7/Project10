@@ -71,7 +71,7 @@ export default class UpdateCourse extends Component{
                           <p>{courseAuthor.firstName} {courseAuthor.lastName}</p>
                         </div>
                         <div className="course--description">
-                          <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={courseData.description} onInput={this.change}/></div>
+                          <div><textarea id="description" name="description"  placeholder="Course description..." defaultValue={courseData.description} onInput={this.change}/></div>
                         </div>
                       </div>
                       <div className="grid-25 grid-right">
@@ -83,7 +83,7 @@ export default class UpdateCourse extends Component{
                             </li>
                             <li className="course--stats--list--item">
                               <h4>Materials Needed</h4>
-                              <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={courseData.materialsNeeded} onInput={this.change}/></div>
+                              <div><textarea id="materialsNeeded" name="materialsNeeded"  placeholder="List materials..." defaultValue={courseData.materialsNeeded} onInput={this.change}/></div>
                             </li>
                           </ul>
                         </div>

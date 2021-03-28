@@ -48,11 +48,11 @@ export default class UserSignUp extends Component{
                     }
                     <div>
                       <form onSubmit={this.submit}>
-                        <div><input id="firstName" name="firstName" type="text" className placeholder="First Name"  value={firstName} onChange={this.change}/></div>
-                        <div><input id="lastName" name="lastName" type="text" className placeholder="Last Name" value={lastName} onChange={this.change} /></div>
-                        <div><input id="emailAddress" name="emailAddress" type="text" className placeholder="Email Address" value={emailAddress} onChange={this.change}  /></div>
-                        <div><input id="password" name="password" type="password" className placeholder="Password"  value={password} onChange={this.change}/></div>
-                        <div><input id="confirmPassword" name="confirmPassword" type="password" className value={confirmPassword} onChange={this.change} placeholder="Confirm Password"  /></div>
+                        <div><input id="firstName" name="firstName" type="text"  placeholder="First Name"  value={firstName} onChange={this.change}/></div>
+                        <div><input id="lastName" name="lastName" type="text"  placeholder="Last Name" value={lastName} onChange={this.change} /></div>
+                        <div><input id="emailAddress" name="emailAddress" type="text"  placeholder="Email Address" value={emailAddress} onChange={this.change}  /></div>
+                        <div><input id="password" name="password" type="password"  placeholder="Password"  value={password} onChange={this.change}/></div>
+                        <div><input id="confirmPassword" name="confirmPassword" type="password"  value={confirmPassword} onChange={this.change} placeholder="Confirm Password"  /></div>
                         <div className="grid-100 pad-bottom"><button className="button" type="submit">Sign Up</button><Link className="button button-secondary" to="/courses">Cancel</Link></div>
                       </form>
                     </div>
