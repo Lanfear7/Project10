@@ -20,9 +20,7 @@ export default class CreateCourse extends Component{
       } = this.state
 
       const errorDisplay = this.state.errors.map((error) => 
-        <React.Fragment>
-          <li>{error}</li>
-        </React.Fragment>
+          <li key={error}>{error}</li>
       )
 
         return(
@@ -35,8 +33,8 @@ export default class CreateCourse extends Component{
                   {
                       errors.length
                       ? <div>
-                          <h2 class="validation--errors--label">Validation errors</h2>
-                          <div class="validation-errors">
+                          <h2 className="validation--errors--label">Validation errors</h2>
+                          <div className="validation-errors">
                             <ul>
                              {errorDisplay}
                             </ul>
@@ -58,11 +56,11 @@ export default class CreateCourse extends Component{
                       <div className="grid-25 grid-right">
                         <div className="course--stats">
                           <ul className="course--stats--list">
-                            <li className="course--stats--list--item">
+                            <li key={'1'} className="course--stats--list--item">
                               <h4>Estimated Time</h4>
                               <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" onChange={this.change} value={estimatedTime}/></div>
                             </li>
-                            <li className="course--stats--list--item">
+                            <li key={'2'} className="course--stats--list--item">
                               <h4>Materials Needed</h4>
                               <div><textarea id="materialsNeeded" name="materialsNeeded" placeholder="List materials..." onChange={this.change} value={materialsNeeded}/></div>
                             </li>

@@ -21,10 +21,10 @@ export default class UserSignUp extends Component{
         errors
       } = this.state
 
-      const errorDisplay = errors.map((error) => 
-        <React.Fragment>
-          <li>{error}</li>
-        </React.Fragment>
+      const errorDisplay = errors.map((error, index) => 
+          <li key={index}>
+            {error}
+          </li>
       )
 
         return(

@@ -124,7 +124,6 @@ export default class UpdateCourse extends Component{
                 errors: error.err
               }
             })
-            console.log(error)
           })
         } else{
           this.props.history.push('/error')
